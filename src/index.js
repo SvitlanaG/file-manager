@@ -1,3 +1,4 @@
+import os from "node:os";
 import { getUsername } from "./utils/getUsername.js";
 import {
   read,
@@ -56,9 +57,37 @@ process.stdin.on("data", async (input) => {
       case "rn":
         await rename(target, extraArg);
         break;
+      case "os":
+        if (target === "--EOL") {
+          console.log(`End-Of-Line: ${JSON.stringify(os.EOL)}`);
+        } else if (target === "--cpus") {
+          const cpus = os.cpus();
+          console.log(`Overall amount of CPUs: ${cpus.length}`);
+          cpus.forEach((cpu, index) => {
+            console.log(
+              `CPU ${index + 1}: Model: ${cpu.model}, Clock Rate: ${(
+                cpu.speed / 1000
+              ).toFixed(2)} GHz`
+            );
+          });
+        } else if (target === "--homedir") {
+          const homeDir = os.homedir();
+          console.log(`Home Directory: ${homeDir}`);
+        } else if (target === "--username") {
+          const userInfo = os.userInfo();
+          console.log(`Current system user name: ${userInfo.username}`);
+        } else if (target === "--architecture") {
+          const architecture = os.arch();
+          console.log(`CPU architecture: ${architecture}`);
+        } else {
+          showInvalidInputError(
+            "Available options: --EOL, --cpus, --homedir, --username, --architecture"
+          );
+        }
+        break;
       default:
         showInvalidInputError(
-          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv"
+          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv, os"
         );
         break;
     }

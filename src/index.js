@@ -12,6 +12,7 @@ import { goUpper, goToFolder, listContent } from "./nwd/index.mjs";
 import { printCurrentDirectory, exitProgram } from "./utils/utils.js";
 import { showInvalidInputError } from "./utils/customError.js";
 import { calcHash } from "./hash/calcHash.js";
+import { compress, decompress } from "./brotli/index.mjs";
 
 const username = getUsername();
 const homeDirectory = process.env.HOME || process.env.USERPROFILE;
@@ -89,9 +90,15 @@ process.stdin.on("data", async (input) => {
       case "hash":
         await calcHash(target);
         break;
+      case "compress":
+        await compress(target, extraArg);
+        break;
+      case "decompress":
+        await decompress(target, extraArg);
+        break;
       default:
         showInvalidInputError(
-          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv, os, hash"
+          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv, os, hash, compress, decompress"
         );
         break;
     }

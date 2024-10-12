@@ -11,6 +11,7 @@ import {
 import { goUpper, goToFolder, listContent } from "./nwd/index.mjs";
 import { printCurrentDirectory, exitProgram } from "./utils/utils.js";
 import { showInvalidInputError } from "./utils/customError.js";
+import { calcHash } from "./hash/calcHash.js";
 
 const username = getUsername();
 const homeDirectory = process.env.HOME || process.env.USERPROFILE;
@@ -85,9 +86,12 @@ process.stdin.on("data", async (input) => {
           );
         }
         break;
+      case "hash":
+        await calcHash(target);
+        break;
       default:
         showInvalidInputError(
-          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv, os"
+          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv, os, hash"
         );
         break;
     }

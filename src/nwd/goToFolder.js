@@ -1,5 +1,8 @@
 import fsPromises from "node:fs/promises";
-import { throwExecutionError } from "../utils/customError.js";
+import {
+  showInvalidInputError,
+  showExecutionError,
+} from "../utils/customError.js";
 
 const goToFolder = async (targetDir) => {
   try {
@@ -8,12 +11,10 @@ const goToFolder = async (targetDir) => {
     if (stats.isDirectory()) {
       process.chdir(targetDir);
     } else {
-      console.error(`${targetDir} is not a directory.`);
-      throwExecutionError();
+      showInvalidInputError(`${targetDir} is not a directory.`);
     }
   } catch (err) {
-    console.error(`Failed to change directory: ${err.message}`);
-    throwExecutionError();
+    showExecutionError(err);
   }
 };
 

@@ -1,13 +1,13 @@
 const createCustomError = (message) => {
-  return new Error(message);
+  return console.error(message);
 };
 
-export const throwInvalidInputError = () => {
-  const errorMessage = "Invalid input";
-  throw createCustomError(errorMessage);
+export const showInvalidInputError = (errorMessage) => {
+  const errorTitle = "Invalid input! ";
+  return createCustomError(errorTitle + errorMessage);
 };
 
-export const throwExecutionError = () => {
-  const errorMessage = "Operation failed";
-  throw createCustomError(errorMessage);
+export const showExecutionError = (errorMessage) => {
+  const errorTitle = "Operation failed! ";
+  return createCustomError(errorTitle + errorMessage);
 };

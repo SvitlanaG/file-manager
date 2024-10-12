@@ -1,7 +1,15 @@
 import { getUsername } from "./utils/getUsername.js";
-// import { copy, create, delete as delete_, move, read, rename } from "./file-operations/index.mjs";
+import {
+  read,
+  create,
+  rename,
+  copy,
+  remove,
+  move,
+} from "./file-operations/index.mjs";
 import { goUpper, goToFolder, listContent } from "./nwd/index.mjs";
 import { printCurrentDirectory, exitProgram } from "./utils/utils.js";
+import { showInvalidInputError } from "./utils/customError.js";
 
 const username = getUsername();
 const homeDirectory = process.env.HOME || process.env.USERPROFILE;
@@ -24,33 +32,33 @@ process.stdin.on("data", async (input) => {
         if (target) {
           await goToFolder(target);
         } else {
-          console.error("Please provide a directory to navigate to.");
+          showInvalidInputError("Please provide a directory to navigate to.");
         }
         break;
       case "ls":
         await listContent();
         break;
-      case "copy":
-        copy(target || ".");
+      case "cp":
+        await copy(target, extraArg);
         break;
-      case "create":
-        createFile(target, extraArg || "");
+      case "add":
+        await create(target);
         break;
-      case "delete":
-        deleteFile(target);
+      case "rm":
+        await remove(target);
         break;
-      case "move":
-        move(target);
+      case "mv":
+        await move(target, extraArg);
         break;
-      case "read":
-        readFile(target);
+      case "cat":
+        await read(target);
         break;
-      case "rename":
-        renameFile(target, extraArg);
+      case "rn":
+        await rename(target, extraArg);
         break;
       default:
-        console.error(
-          "Invalid command. Available commands: cd, up, ls, copy, create, delete, move, read, rename"
+        showInvalidInputError(
+          "Available commands: cd, up, ls, cat, add, rn, cp, rm, mv"
         );
         break;
     }

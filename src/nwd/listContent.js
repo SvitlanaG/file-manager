@@ -1,6 +1,6 @@
 import fsPromises from "node:fs/promises";
 import path from "node:path";
-import { throwExecutionError } from "../utils/customError.js";
+import { showExecutionError } from "../utils/customError.js";
 
 const listContent = async () => {
   try {
@@ -35,8 +35,7 @@ const listContent = async () => {
       );
     });
   } catch (err) {
-    console.error(`Failed to list directory contents: ${err.message}`);
-    throwExecutionError();
+    showExecutionError(err);
   }
 };
 

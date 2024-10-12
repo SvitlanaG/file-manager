@@ -1,5 +1,5 @@
 import { userInfo } from "os";
-import { throwInvalidInputError } from "./customError.js";
+import { showInvalidInputError } from "./customError.js";
 
 export const getUsername = () => {
   try {
@@ -12,8 +12,7 @@ export const getUsername = () => {
         : osUserInfo.username;
 
     return username;
-  } catch (e) {
-    console.error(e);
-    throwInvalidInputError();
+  } catch (err) {
+    showInvalidInputError(err);
   }
 };

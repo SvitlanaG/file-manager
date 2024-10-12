@@ -1,5 +1,5 @@
 import { userInfo } from "os";
-import { throwInvalidInputError } from "../utils/customError.js";
+import { throwInvalidInputError } from "./customError.js";
 
 export const getUsername = () => {
   try {
